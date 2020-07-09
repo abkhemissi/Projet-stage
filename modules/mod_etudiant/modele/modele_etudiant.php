@@ -120,6 +120,24 @@ class ModeleEtudiant extends ModeleGenerique{
         return $tab;
     }
 
+    function nb_trie_prenomNom($PrenomNom){
+        $sql = 'SELECT * FROM etudiant WHERE CONCAT( prenomEtud," ",nomEtud ) = UPPER(:prenomNom)';
+        $req = self::$bdd -> prepare($sql);
+        $req -> bindParam(':prenomNom', $PrenomNom);
+        $req -> execute();
+        $nbEtud = $req -> rowCount();
+        return $nbEtud;
+    }
+
+    function trie_prenomNom($page,$PrenomNom){
+        $sql = 'SELECT * FROM etudiant WHERE CONCAT( prenomEtud," ",nomEtud ) = UPPER(:prenomNom) order by numeroINE desc limit '.(($page-1)*5). ','. 5;
+        $req = self::$bdd -> prepare($sql);
+        $req -> bindParam(':prenomNom', $PrenomNom);
+        $req -> execute();
+        $tab = $req -> fetchAll();
+        return $tab;
+    }
+
     public function nb_students(){
         $reponse = self::$bdd->query('SELECT numeroINE from etudiant');
         $nbEtud = $reponse->rowCount();

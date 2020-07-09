@@ -155,16 +155,16 @@ class ContEtudiant extends ContGenerique{
         }
 
         if (strcmp($tri, "prenomNomEtud") == 0){
-            $nbEtudiants = $this->modeleEtud->nb_trie_etablissement($recherche);
+            $nbEtudiants = $this->modeleEtud->nb_trie_prenomNom($recherche);
             $nbPagesTotales = ceil($nbEtudiants/5);
             if (isset($_GET['page']) and !empty($_GET['page'])) {
                 $page = $_GET['page'];
-                $listEtudiantTri = $this->modeleEtud->trie_etablissement($page, $recherche);
+                $listEtudiantTri = $this->modeleEtud->trie_prenomNom($page, $recherche);
                 require('modules/mod_etudiant/vue_etudiant/listEtud.php');
             }
             else {
                 $page = 1;
-                $listEtudiantTri = $this->modeleEtud->trie_etablissement($page, $recherche);
+                $listEtudiantTri = $this->modeleEtud->trie_prenomNom($page, $recherche);
                 require('modules/mod_etudiant/vue_etudiant/listEtud.php');
             }    
         }
